@@ -11,8 +11,6 @@ import androidx.activity.ComponentActivity
 import com.example.myapplication.data.api.BookMatesApi
 import com.example.myapplication.data.model.LoginResponse
 import com.example.myapplication.data.model.User
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
