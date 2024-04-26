@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/add_player"
+        android:title="@string/add_player"
+        app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/add_template"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/add_template_icon"
+        android:title="@string/add_layout"
+        app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/add_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/add_game"
+        android:title="@string/add_layout"
+        app:showAsAction="ifRoom|withText" />
+</menu>

@@ -1,0 +1,99 @@
+{
+    "_id": "661839e0cba49913977c60a4",
+    "username": "user1",
+    "password": "password",
+    "email": "testemail@gmail.com",
+    "created_player_list": [
+        {
+            "_id": "661839e1fc879c7166c74a71",
+            "name": "John",
+            "wins": 6,
+            "games_total": 11,
+            "type": "PLAYER",
+            "game_records": {
+                "Game_name": ["Wins", "Losses"],
+                "Chess": [1, 0]
+            },
+            "on_update": "2024-04-11 15:28:32.480671"
+        },
+        {
+            "_id": "661839e26be8c6960eded431",
+            "name": "Joe",
+            "wins": 3,
+            "games_total": 6,
+            "type": "PLAYER",
+            "game_records": {
+                "Game_name": ["Wins", "Losses"],
+                "Chess": [0, 1]
+            },
+            "on_update": "2024-04-11 15:28:32.480671"
+        }
+    ],
+    "games_logged": 5,
+    "unique_games": 3,
+    "templates_table": [
+        {
+            "_id": "661839e2d72e0bd81e385e67",
+            "game_name": "Chess",
+            "game_type": "Strategy",
+            "score_type": "W/L",
+            "avg_duration": 30,
+            "num_players": 2,
+            "winner": 1,
+            "game_template": [2, 2],
+            "type": "TEMPLATE"
+        }
+    ],
+    "games_table": [
+        {
+            "_id": "661839e38c70128c93396716",
+            "match_name": "Chess match on: 04/11/2024",
+            "game_name": "Chess",
+            "template_id": "661839e2d72e0bd81e385e67",
+            "is_finished": true,
+            "duration": 30,
+            "scores_dict": {
+                "Joe": 15,
+                "John": 0
+            },
+            "players": [
+                {
+                    "_id": "661839e1fc879c7166c74a71",
+                    "name": "John",
+                    "wins": 5,
+                    "games_total": 10,
+                    "type": "PLAYER",
+                    "game_records": {
+                        "Game_name": ["Wins", "Losses"]
+                    },
+                    "on_update": "2024-04-11 15:28:32.480671"
+                },
+                {
+                    "_id": "661839e26be8c6960eded431",
+                    "name": "Joe",
+                    "wins": 3,
+                    "games_total": 5,
+                    "type": "PLAYER",
+                    "game_records": {
+                        "Game_name": ["Wins", "Losses"]
+                    },
+                    "on_update": "2024-04-11 15:28:32.480671"
+                }
+            ],
+            "winner": {
+                "_id": "661839e1fc879c7166c74a71",
+                "name": "John",
+                "wins": 5,
+                "games_total": 10,
+                "type": "PLAYER",
+                "game_records": {
+                    "Game_name": ["Wins", "Losses"]
+                },
+                "on_update": "2024-04-11 15:28:32.480671"
+            },
+            "type": "GAME"
+        }
+    ],
+    "type": "ACCOUNT",
+    "on_update": "2024-04-11 15:28:31.379679"
+}

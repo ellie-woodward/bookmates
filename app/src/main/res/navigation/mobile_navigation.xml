@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.myapplication.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/gameListFragment"
+        android:name="com.example.myapplication.ui.gamelist.GameListFragment"
+        android:label="GameListFragment"
+        tools:layout="@layout/fragment_game_list">
+        <action
+            android:id="@+id/show_game_detail"
+            app:destination="@id/gameFragment" >
+            <argument
+                android:name="gameId"
+                app:argType="java.util.UUID"
+                />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/nav_leaderboard"
+        android:name="com.example.myapplication.ui.leaderboard.LeaderboardFragment"
+        android:label="@string/menu_Leaderboard"
+        tools:layout="@layout/fragment_leaderboard" />
+
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.example.myapplication.GameFragment"
+        android:label="GameFragment" />
+    <argument
+        android:name="gameId"
+        app:argType="java.util.UUID" />
+    <fragment
+        android:id="@+id/newGameFragment"
+        android:name="com.example.myapplication.NewGameFragment"
+        android:label="NewGameFragment" />
+    <action
+        android:id="@+id/action_NewGameFragment"
+        app:destination="@id/newGameFragment"/>
+    <action
+        android:id="@+id/action_GameFragment"
+        app:destination="@id/gameFragment">
+        <argument
+            android:name="gameId"
+            app:argType="java.util.UUID"
+            />
+    </action>
+
+    <action
+        android:id="@+id/action_newTemplateFragment"
+        app:destination="@id/newTemplateFragment"/>
+
+    <action
+        android:id="@+id/action_newPlayerFragment"
+        app:destination="@id/newPlayerFragment"/>
+
+    <action
+        android:id="@+id/action_GameList"
+        app:destination="@id/gameListFragment"/>
+
+    <fragment
+        android:id="@+id/newTemplateFragment"
+        android:name="com.example.myapplication.NewTemplateFragment"
+        android:label="NewTemplateFragment" />
+    <fragment
+        android:id="@+id/newPlayerFragment"
+        android:name="com.example.myapplication.NewPlayerFragment"
+        android:label="NewPlayerFragment" />
+
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.example.myapplication.ui.account.AccountFragment"
+        android:label="@string/account"
+        tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/nav_camera"
+        android:name="com.example.myapplication.ui.camera.CameraFragment"
+        android:label="@string/camera"
+        tools:layout="@layout/fragment_camera" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.myapplication.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.myapplication.ui.login.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+</navigation>
