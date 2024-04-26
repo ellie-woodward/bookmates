@@ -59,7 +59,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
-    kapt("com.squareup.moshi:moshi:1.13.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
     implementation("com.google.firebase:firebase-auth")
     implementation("org.json:json:20231013")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
