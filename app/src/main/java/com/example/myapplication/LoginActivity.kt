@@ -28,7 +28,16 @@ class LoginActivity : ComponentActivity() {
 
     var csrf_token : String? = null
 
-    private lateinit var api: BookMatesApi
+    private var api: BookMatesApi
+
+    init{
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("https://bookmate.discovery.cs.vt.edu/")
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+        api = retrofit.create()
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,14 +90,8 @@ class LoginActivity : ComponentActivity() {
     }
 
     suspend fun fetchLogin(name: String, password: String): LoginResponse {
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://bookmate.discovery.cs.vt.edu/")
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
-        api = retrofit.create()
 
         val token = api.getToken()
-
         Log.e("THE TOKENNNNNNNNNNN", token.toString())
 
         val jsonObject = JSONObject()
