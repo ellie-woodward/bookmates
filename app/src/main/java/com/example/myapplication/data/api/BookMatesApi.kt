@@ -40,6 +40,7 @@ interface BookMatesApi {
     )
     suspend fun getToken(): Token
 
+    @Headers("Content-Type: application/json")
     @POST(
         "account_login/"
     )

@@ -16,10 +16,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.MultipartBody.Part.Companion.create
 import okhttp3.OkHttpClient
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -27,8 +24,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 
@@ -40,13 +35,13 @@ class LoginActivity : ComponentActivity() {
 
 //    var csrf_token : String? = null
 
-    private lateinit var api: BookMatesApi
+    private var api: BookMatesApi
 
     init{
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://bookmate.discovery.cs.vt.edu/")
             .client(provideOkHttpClient())
-            .addConverterFactory(MoshiConverterFactory.create())
+//            .addConverterFactory(MoshiConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         api = retrofit.create(BookMatesApi::class.java)
