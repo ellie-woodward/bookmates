@@ -14,27 +14,42 @@ import com.example.myapplication.data.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.MultipartBody.Part.Companion.create
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
+import java.util.concurrent.TimeUnit
 
 
 class LoginActivity : ComponentActivity() {
 
     var currentUser : String?= null
 
-    var csrf_token : String? = null
+    val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
 
-    private var api: BookMatesApi
+//    var csrf_token : String? = null
+
+    private lateinit var api: BookMatesApi
 
     init{
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://bookmate.discovery.cs.vt.edu/")
+            .client(provideOkHttpClient())
             .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
-        api = retrofit.create()
-
+        api = retrofit.create(BookMatesApi::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +70,7 @@ class LoginActivity : ComponentActivity() {
                 var response = fetchLogin(username.getText().toString(), password.getText().toString())
 //                jsonUser = fetchLogin(username.getText().toString(), password.getText().toString())
 //                if (username.getText().toString().equals("user") && password.getText().toString().equals("password")){
-                if (response.message){
+                if (response){
                     Toast.makeText(this@LoginActivity, "login successful", Toast.LENGTH_SHORT).show()
                     currentUser =  username.getText().toString()
                     onStart()
@@ -87,16 +102,45 @@ class LoginActivity : ComponentActivity() {
         startActivity(intent)
     }
 
-    suspend fun fetchLogin(name: String, password: String): LoginResponse {
+    fun fetchLogin(name: String, password: String): Boolean {
 
-        val token = api.getToken()
-        Log.e("THE TOKENNNNNNNNNNN", token.toString())
+//        val token = api.getToken()
+
+        val userPass = JSONObject()
+        userPass.put("username", name)
+        userPass.put("password", password)
 
         val jsonObject = JSONObject()
-        jsonObject.put("username", name)
-        jsonObject.put("password", password)
+        jsonObject.put("login_data", userPass)
 
-        return api.loginData(jsonObject, csrf_token!!)
+        val requestBody = userPass.toString().toRequestBody(JSON)
+
+        Log.e("HErE",  jsonObject.toString())
+
+        api.loginData(requestBody).enqueue(
+            object : Callback<LoginResponse> {
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    Log.e("The failure Response", t.message.toString())
+                }
+                override fun onResponse( call: Call<LoginResponse>, response: Response<LoginResponse>) {
+//                    val addedUser = response
+                    Log.e("The success Response", response.toString())
+//                    onResult(addedUser)
+                }
+            })
+
+//        val response =  api.loginData(requestBody)tha
+
+
+        return false
+    }
+
+    private fun provideOkHttpClient(): OkHttpClient {
+        val okhttpClientBuilder = OkHttpClient.Builder()
+        okhttpClientBuilder.connectTimeout(30, TimeUnit.SECONDS)
+        okhttpClientBuilder.readTimeout(30, TimeUnit.SECONDS)
+        okhttpClientBuilder.writeTimeout(30, TimeUnit.SECONDS)
+        return okhttpClientBuilder.build()
     }
 
 }

@@ -5,7 +5,9 @@ import com.example.myapplication.data.model.JsonResponse
 import com.example.myapplication.data.model.LoginResponse
 import com.example.myapplication.data.model.User
 import com.example.myapplication.data.model.Token
+import okhttp3.RequestBody
 import org.json.JSONObject
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -41,8 +43,9 @@ interface BookMatesApi {
     @POST(
         "account_login/"
     )
-    suspend fun loginData(@Body body: JSONObject?, @Header("Authorization") token: String?): LoginResponse
+    fun loginData(@Body body: RequestBody): Call<LoginResponse>
 
+//    suspend fun loginData(@Header("Authorization") token: String, @Body body: JSONObject): LoginResponse
 
     //path('create_account/',
     @Headers("Content-Type: application/json")
