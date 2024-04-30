@@ -22,8 +22,10 @@ import com.example.myapplication.databinding.FragmentLeaderboardBinding
 import kotlinx.coroutines.launch
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.data.model.CreatedPlayer
 import com.example.myapplication.Player
 import com.example.myapplication.Template
+import com.example.myapplication.UserStorage.Companion.user
 
 class LeaderboardFragment : Fragment() {
 
@@ -51,16 +53,52 @@ class LeaderboardFragment : Fragment() {
         //    textView.text = it
         // }
 
-        val sortedPlayers = sharedViewModel.playerList.getPlayers().sortedByDescending { it.wins }
-        binding.firstPlace.text = "1: ${sortedPlayers[0].playerName}"
-        binding.secondPlace.text = "2:${sortedPlayers[1].playerName}"
-        binding.thirdPlace.text = "3:${sortedPlayers[2].playerName}"
+        var result = handleRankings()
+
+//        val sortedPlayers = sharedViewModel.playerList.getPlayers().sortedByDescending { it.wins }
+        if (result.size == 0){
+            binding.firstPlace.text = "No players have been created"
+        }
+        else if(result.size == 1) {
+            binding.firstPlace.text = "1: ${result[0]}"
+        }
+        else if(result.size == 2) {
+            binding.firstPlace.text = "1: ${result[0]}"
+            binding.secondPlace.text = "2:${result[1]}"
+        }
+        else {
+            binding.firstPlace.text = "1: ${result[0]}"
+            binding.secondPlace.text = "2:${result[1]}"
+            binding.thirdPlace.text = "3:${result[2]}"
+        }
 
         return root
 
+    }
 
+    private fun handleRankings(): List<String> {
+        var final_result = ArrayList<String>()
+        var player_list: List<CreatedPlayer>? = user.createdPlayers
 
-
+        var max = 0
+        var maxPlayer = ""
+        if (player_list != null) {
+            for (player: CreatedPlayer in player_list) {
+                for (player2: CreatedPlayer in player_list) {
+                    if (player2.wins > max && !final_result.contains(player2.name)){
+                        max = player2.wins
+                        maxPlayer = player2.name
+                    }
+                }
+                final_result.add(maxPlayer)
+                if (final_result.size >= 4){
+                    break
+                }
+                max = 0
+                maxPlayer = ""
+            }
+        }
+        return final_result
     }
 
 

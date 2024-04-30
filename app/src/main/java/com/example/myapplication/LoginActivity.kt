@@ -9,42 +9,39 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.example.myapplication.data.api.BookMatesApi
-import com.example.myapplication.data.model.LoginResponse
 import com.example.myapplication.data.model.User
+import com.example.myapplication.data.model.Account
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import retrofit2.create
 import java.util.concurrent.TimeUnit
+import com.example.myapplication.UserStorage
 
 
 class LoginActivity : ComponentActivity() {
 
     var currentUser : String?= null
 
-    val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
-
-//    var csrf_token : String? = null
-
     private var api: BookMatesApi
 
     init{
+        val moshi: Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://bookmate.discovery.cs.vt.edu/")
-            .client(provideOkHttpClient())
-//            .addConverterFactory(MoshiConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
+//            .client(provideOkHttpClient())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+//            .addConverterFactory(GsonConverterFactory.create())
             .build()
-        api = retrofit.create(BookMatesApi::class.java)
+        api = retrofit.create()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,13 +55,9 @@ class LoginActivity : ComponentActivity() {
         val loginbtn = findViewById<Button>(R.id.login_btn);
         val registerbtn = findViewById<Button>(R.id.register_btn);
 
-        var jsonUser: User
-
         loginbtn.setOnClickListener {
             GlobalScope.launch(Dispatchers.Main) {
-                var response = fetchLogin(username.getText().toString(), password.getText().toString())
-//                jsonUser = fetchLogin(username.getText().toString(), password.getText().toString())
-//                if (username.getText().toString().equals("user") && password.getText().toString().equals("password")){
+                val response = fetchLogin(username.getText().toString(), password.getText().toString())
                 if (response){
                     Toast.makeText(this@LoginActivity, "login successful", Toast.LENGTH_SHORT).show()
                     currentUser =  username.getText().toString()
@@ -97,36 +90,20 @@ class LoginActivity : ComponentActivity() {
         startActivity(intent)
     }
 
-    fun fetchLogin(name: String, password: String): Boolean {
-
+    suspend fun fetchLogin(name: String, password: String): Boolean {
+        val response: Account
 //        val token = api.getToken()
-
-        val userPass = JSONObject()
-        userPass.put("username", name)
-        userPass.put("password", password)
-
-        val jsonObject = JSONObject()
-        jsonObject.put("login_data", userPass)
-
-        val requestBody = userPass.toString().toRequestBody(JSON)
-
-        Log.e("HErE",  jsonObject.toString())
-
-        api.loginData(requestBody).enqueue(
-            object : Callback<LoginResponse> {
-                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    Log.e("The failure Response", t.message.toString())
-                }
-                override fun onResponse( call: Call<LoginResponse>, response: Response<LoginResponse>) {
-//                    val addedUser = response
-                    Log.e("The success Response", response.toString())
-//                    onResult(addedUser)
-                }
-            })
-
-//        val response =  api.loginData(requestBody)tha
-
-
+        try{
+            response = api.loginData(name)
+        } catch (e:Exception){
+            return false
+        }
+        if (response.accountData.password.equals(password)){
+            currentUser = name
+            var myUser = UserStorage()
+            myUser.setUser(response.accountData)
+            return true
+        }
         return false
     }
 

@@ -1,6 +1,7 @@
 package com.example.myapplication.data.api
 
 import com.example.myapplication.Player
+import com.example.myapplication.data.model.Account
 import com.example.myapplication.data.model.JsonResponse
 import com.example.myapplication.data.model.LoginResponse
 import com.example.myapplication.data.model.User
@@ -13,6 +14,8 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 interface BookMatesApi {
@@ -40,11 +43,11 @@ interface BookMatesApi {
     )
     suspend fun getToken(): Token
 
-    @Headers("Content-Type: application/json")
-    @POST(
-        "account_login/"
+//    @Headers("Content-Type: application/json")
+    @GET(
+        "account_login/{username}/"
     )
-    fun loginData(@Body body: RequestBody): Call<LoginResponse>
+    suspend fun loginData(@Path("username") name: String): Account
 
 //    suspend fun loginData(@Header("Authorization") token: String, @Body body: JSONObject): LoginResponse
 

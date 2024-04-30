@@ -60,6 +60,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
     implementation("com.squareup.moshi:moshi:1.15.1")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
     implementation("androidx.room:room-common:2.6.1")
     implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")

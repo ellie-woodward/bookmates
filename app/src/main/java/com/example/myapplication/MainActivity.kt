@@ -2,10 +2,7 @@ package com.example.myapplication
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import com.example.myapplication.UserStorage.Companion.user
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,7 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.material.button.MaterialButton
 import android.content.Intent;
+import android.util.Log
 import android.view.MenuItem
+import com.example.myapplication.data.model.User
 import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : AppCompatActivity() {

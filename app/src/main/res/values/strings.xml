@@ -65,4 +65,6 @@
     <string name="current_games_played">games played: 4</string>
     <string name="current_players">Players: playerName</string>
 
+    <string name="current_user"></string>
+
 </resources>
