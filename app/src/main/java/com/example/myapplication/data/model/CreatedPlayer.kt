@@ -7,6 +7,8 @@ data class CreatedPlayer(
     @Json(name = "name") val name: String,
     @Json(name = "wins") val wins: Int,
     @Json(name = "games_total") val totalGames: Int,
+    @Json(name= "game_records") val record: Map<String, Any>,
     @Json(name = "type") val type: String
 ){}
 
+//Map<String, ArrayList<String>>
