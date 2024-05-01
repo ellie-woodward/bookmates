@@ -75,7 +75,7 @@ class GameFragment: Fragment() {
 
             binding.finishedCheckbox.setOnClickListener {
                 //game.updateFinished()
-                sharedViewModel.UpdateFinished(game)
+                //sharedViewModel.UpdateFinished(game)
             }
 
         }
@@ -99,6 +99,7 @@ class GameFragment: Fragment() {
 
         //   return gameId?.let { Games.getGame(it) }!!
         return sharedViewModel.games.value?.find { it.gameId == gameId}
+
 
 
     }

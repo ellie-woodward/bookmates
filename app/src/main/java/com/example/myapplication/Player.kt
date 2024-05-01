@@ -1,6 +1,12 @@
 package com.example.myapplication
 
+import com.example.myapplication.data.api.BookMatesApi
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.UUID
+import com.example.myapplication.data.model.User
 
 data class Player(
     val playerId: UUID,
@@ -20,46 +26,47 @@ data class winLoss(
 object PlayerList {
     private val players: MutableList<Player> = mutableListOf()
 
+
     init{
-        players.add(
-            Player(
-            UUID.randomUUID(),
-            "Stephen",
-            0,
-            0,
-
-            )
-        )
-
-        players.add(
-            Player(
-            UUID.randomUUID(),
-            "Trent",
-            0,
-            0,
-
-            )
-        )
-
-        players.add(
-            Player(
-            UUID.randomUUID(),
-            "Ellie",
-            0,
-            0,
-
-            )
-        )
-
-        players.add(
-            Player(
-            UUID.randomUUID(),
-            "Ronin",
-            0,
-            0,
-
-            )
-        )
+//        players.add(
+//            Player(
+//            UUID.randomUUID(),
+//            "Stephen",
+//            0,
+//            0,
+//
+//            )
+//        )
+//
+//        players.add(
+//            Player(
+//            UUID.randomUUID(),
+//            "Trent",
+//            0,
+//            0,
+//
+//            )
+//        )
+//
+//        players.add(
+//            Player(
+//            UUID.randomUUID(),
+//            "Ellie",
+//            0,
+//            0,
+//
+//            )
+//        )
+//
+//        players.add(
+//            Player(
+//            UUID.randomUUID(),
+//            "Ronin",
+//            0,
+//            0,
+//
+//            )
+//        )
     }
 
 

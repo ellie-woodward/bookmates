@@ -218,9 +218,9 @@ class NewTemplateFragment : Fragment() {
         println(template.rowTitles)
 
         // Add the template to the shared view model
-        println(sharedViewModel.getNumberOfTemplates())
-        sharedViewModel.addNewTemplate(template)
-        println(sharedViewModel.getNumberOfTemplates())
+        //println(sharedViewModel.getNumberOfTemplates())
+        //sharedViewModel.addNewTemplate(template)
+        //println(sharedViewModel.getNumberOfTemplates())
 
         val message = "Template added: $title"
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
