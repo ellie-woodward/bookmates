@@ -58,13 +58,18 @@ class LeaderboardFragment : Fragment() {
 //        val sortedPlayers = sharedViewModel.playerList.getPlayers().sortedByDescending { it.wins }
         if (result.size == 0){
             binding.firstPlace.text = "No players have been created"
+            binding.secondPlace.text = ""
+            binding.thirdPlace.text = ""
         }
         else if(result.size == 1) {
             binding.firstPlace.text = "1: ${result[0]}"
+            binding.secondPlace.text = ""
+            binding.thirdPlace.text = ""
         }
         else if(result.size == 2) {
             binding.firstPlace.text = "1: ${result[0]}"
             binding.secondPlace.text = "2:${result[1]}"
+            binding.thirdPlace.text = ""
         }
         else {
             binding.firstPlace.text = "1: ${result[0]}"

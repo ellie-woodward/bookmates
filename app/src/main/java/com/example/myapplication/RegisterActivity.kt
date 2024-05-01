@@ -82,14 +82,14 @@ class RegisterActivity : ComponentActivity() {
                         Toast.makeText(this@RegisterActivity, "Password is blank", Toast.LENGTH_SHORT).show()
                     }
                     else{
-                        Toast.makeText(this@RegisterActivity, "Registration successful", Toast.LENGTH_SHORT).show()
                         currentUser = username.getText().toString();
                         var response = createAccount(username.getText().toString(), password.getText().toString(), email.getText().toString())
-                        if (false){
-                            sendToMainActivity()
+                        if (response){
+                            Toast.makeText(this@RegisterActivity, "Registration successful", Toast.LENGTH_SHORT).show()
+                            sendToLoginActivity()
                         }
                         else{
-                            Log.d("response", response.toString())
+                            Toast.makeText(this@RegisterActivity, "Username is taken", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -100,6 +100,9 @@ class RegisterActivity : ComponentActivity() {
     }
 
     suspend fun createAccount(name: String, password: String, email: String): Boolean {
+
+        var UsernameTaken = true
+
         val jsonObject = JSONObject()
         jsonObject.put("username", name)
         jsonObject.put("password", password)
@@ -110,21 +113,30 @@ class RegisterActivity : ComponentActivity() {
         Log.d("JSON", jsonObject.toString())
         val requestBody = jsonObject.toString().toRequestBody(JSON)
 
-        api.createAccount(requestBody).enqueue(
-            object : Callback<CreateAccountResponse> {
-                override fun onFailure(call: Call<CreateAccountResponse>, t: Throwable) {
-                    Log.e("The failure Response", t.message.toString())
-                }
-                override fun onResponse( call: Call<CreateAccountResponse>, response: Response<CreateAccountResponse>) {
-                    Log.e("The success Response", response.toString())
-                }
-            })
+        try {
+            val account = api.loginData(name)
+        } catch (_:Exception){
+            UsernameTaken = false
+        }
+        if (UsernameTaken){
+            return false
+        } else {
+            api.createAccount(requestBody).enqueue(
+                object : Callback<CreateAccountResponse> {
+                    override fun onFailure(call: Call<CreateAccountResponse>, t: Throwable) {
+                        Log.e("The failure Response", t.message.toString())
+                    }
+                    override fun onResponse( call: Call<CreateAccountResponse>, response: Response<CreateAccountResponse>) {
+                        Log.e("The success Response", response.toString())
+                    }
+                })
+        }
+
         return true
     }
 
-    private fun sendToMainActivity() {
-        val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-        intent.putExtra("username", currentUser) // replace "key" and "value" with your actual key-value pair
+    private fun sendToLoginActivity() {
+        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
         startActivity(intent)
     }
 }
