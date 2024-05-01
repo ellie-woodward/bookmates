@@ -26,99 +26,99 @@ class SharedViewModel: ViewModel() {
 
     init {
         viewModelScope.launch {
-            gameList.createGames(
-                templateList.getTemplates().get(0),
-                "Chess Game1",
-                listOf(playerList.getPlayers().get(0), playerList.getPlayers().get(1)),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(1),
-                "Uno Game1",
-                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(2),
-                "Spades Game1",
-                listOf(playerList.getPlayers().get(1), playerList.getPlayers().get(3)),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(1),
-                "Uno Game2",
-                listOf(playerList.getPlayers().get(0), playerList.getPlayers().get(2)),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(0),
-                "Chess Game2",
-                listOf(playerList.getPlayers().get(0), playerList.getPlayers().get(3)),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(2),
-                "Spades Game2",
-                listOf(playerList.getPlayers().get(1), playerList.getPlayers().get(2)),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(2),
-                "Spades Game3",
-                listOf(
-                    playerList.getPlayers().get(2),
-                    playerList.getPlayers().get(3),
-                    playerList.getPlayers().get(0)
-                ),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(1),
-                "Uno Game3",
-                listOf(
-                    playerList.getPlayers().get(2),
-                    playerList.getPlayers().get(3),
-                    playerList.getPlayers().get(0),
-                    playerList.getPlayers().get(1)
-                ),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(1),
-                "Uno Game4",
-                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(1),
-                "Uno Game5",
-                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(0),
-                "Chess Game3",
-                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(0),
-                "Chess Game4",
-                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(2),
-                "Spades Game4",
-                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
-                mutableMapOf()
-            )
-            gameList.createGames(
-                templateList.getTemplates().get(2),
-                "Spades Game5",
-                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
-                mutableMapOf()
-            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(0),
+//                "Chess Game1",
+//                listOf(playerList.getPlayers().get(0), playerList.getPlayers().get(1)),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(1),
+//                "Uno Game1",
+//                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(2),
+//                "Spades Game1",
+//                listOf(playerList.getPlayers().get(1), playerList.getPlayers().get(3)),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(1),
+//                "Uno Game2",
+//                listOf(playerList.getPlayers().get(0), playerList.getPlayers().get(2)),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(0),
+//                "Chess Game2",
+//                listOf(playerList.getPlayers().get(0), playerList.getPlayers().get(3)),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(2),
+//                "Spades Game2",
+//                listOf(playerList.getPlayers().get(1), playerList.getPlayers().get(2)),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(2),
+//                "Spades Game3",
+//                listOf(
+//                    playerList.getPlayers().get(2),
+//                    playerList.getPlayers().get(3),
+//                    playerList.getPlayers().get(0)
+//                ),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(1),
+//                "Uno Game3",
+//                listOf(
+//                    playerList.getPlayers().get(2),
+//                    playerList.getPlayers().get(3),
+//                    playerList.getPlayers().get(0),
+//                    playerList.getPlayers().get(1)
+//                ),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(1),
+//                "Uno Game4",
+//                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(1),
+//                "Uno Game5",
+//                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(0),
+//                "Chess Game3",
+//                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(0),
+//                "Chess Game4",
+//                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(2),
+//                "Spades Game4",
+//                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
+//                mutableMapOf()
+//            )
+//            gameList.createGames(
+//                templateList.getTemplates().get(2),
+//                "Spades Game5",
+//                listOf(playerList.getPlayers().get(2), playerList.getPlayers().get(3)),
+//                mutableMapOf()
+//            )
 
 
 

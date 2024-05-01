@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     var currentUser : String? =null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
