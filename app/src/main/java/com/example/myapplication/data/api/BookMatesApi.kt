@@ -2,20 +2,17 @@ package com.example.myapplication.data.api
 
 import com.example.myapplication.Player
 import com.example.myapplication.data.model.Account
+import com.example.myapplication.data.model.CreateAccountResponse
 import com.example.myapplication.data.model.JsonResponse
-import com.example.myapplication.data.model.LoginResponse
 import com.example.myapplication.data.model.User
 import com.example.myapplication.data.model.Token
 import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 
 interface BookMatesApi {
@@ -56,7 +53,7 @@ interface BookMatesApi {
     @POST(
         "create_account/"
     )
-    suspend fun createAccount(@Body body: JSONObject?): JsonResponse
+    fun createAccount(@Body body: RequestBody): Call<CreateAccountResponse>
 
 //    //path('get_player_account/id/<str:account_id>/<str:player_id>/',               views.get_player_account_by_id,                           name='get_player_account_by_id'),
 //    @GET(
