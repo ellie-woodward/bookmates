@@ -99,7 +99,6 @@ class LoginActivity : ComponentActivity() {
 
     suspend fun fetchLogin(name: String, password: String): Boolean {
         val response: Account
-//        val token = api.getToken()
         try{
             response = api.loginData(name)
         } catch (e:Exception){
