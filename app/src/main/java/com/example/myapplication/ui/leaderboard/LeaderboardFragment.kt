@@ -133,37 +133,67 @@ class LeaderboardFragment : Fragment() {
             if (selectedTemplate !=  null) {
                 // Filter games by the selected template
                 filterGamesByTemplate(selectedTemplate)
-            } else {
-                // No template selected, filter games by most wins total
-                filterGamesByMostWinsTotal()
             }
         }
     }
 
     private fun filterGamesByTemplate(selectedTemplate: String) {
-        val template = sharedViewModel.templates.value?.find { it.gameName == selectedTemplate }
+        val template = sharedViewModel.templates.value?.find { it.gameName == selectedTemplate }?.gameName
+        Log.d("template", template.toString())
 
-        val sortedPlayers = sharedViewModel.playerList.getPlayers().sortedByDescending { template?.let { it1 ->
-            it.stats.get(
-                it1.gameName)?.wins ?: 0
-        } }
+        var sortedPlayers = ArrayList<String>()
+        var player_list: List<CreatedPlayer>? = user.createdPlayers
+
+//        val sortedPlayers = sharedViewModel.playerList.getPlayers().sortedByDescending { template?.let { it1 ->
+//            it.stats.get(
+//                it1.gameName)?.wins ?: 0
+//        } }
+
+        var max = 0
+        var maxPlayer = ""
+        if (player_list != null) {
+            for (player: CreatedPlayer in player_list) {
+                for (player2: CreatedPlayer in player_list) {
+                    try {
+                        var player_record_score = player2.record[template].toString().get(1).code
+                        if (player_record_score > max && !sortedPlayers.contains(player2.name)){
+                            max = player_record_score
+                            maxPlayer = player2.name
+                        }
+                    } catch (_:Exception){
+
+                    }
+                }
+                sortedPlayers.add(maxPlayer)
+                if (sortedPlayers.size >= 4) {
+                    break
+                }
+                max = 0
+                maxPlayer = ""
+            }
+        }
         // Update UI or perform actions with the filtered games
 
         updateUI(sortedPlayers)
     }
+    private fun updateUI(sortedPlayers: List<String>){
 
-    private fun filterGamesByMostWinsTotal() {
-        // Get games sorted by most wins total
-        val sortedPlayers = sharedViewModel.playerList.getPlayers().sortedByDescending { it.wins }
-        updateUI(sortedPlayers)
-        // Update UI or perform actions with the filtered games
-    }
+        if (sortedPlayers.size == 0){
+            binding.firstPlace.text = "No players have been recorded"
+        }
+        else if(sortedPlayers.size == 1) {
+            binding.firstPlace.text = "1: ${sortedPlayers[0]}"
+        }
+        else if(sortedPlayers.size == 2) {
+            binding.firstPlace.text = "1: ${sortedPlayers[0]}"
+            binding.secondPlace.text = "2:${sortedPlayers[1]}"
+        }
+        else {
+            binding.firstPlace.text = "1: ${sortedPlayers[0]}"
+            binding.secondPlace.text = "2:${sortedPlayers[1]}"
+            binding.thirdPlace.text = "3:${sortedPlayers[2]}"
+        }
 
-
-    private fun updateUI(sortedPlayers: List<Player>){
-        binding.firstPlace.text = "1: ${sortedPlayers[0].playerName}"
-        binding.secondPlace.text = "2:${sortedPlayers[1].playerName}"
-        binding.thirdPlace.text = "3:${sortedPlayers[2].playerName}"
     }
 
     override fun onDestroyView() {

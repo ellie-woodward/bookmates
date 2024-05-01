@@ -15,7 +15,12 @@ data class Game(
     @Json(name = "scores_dict") val scores: Map<String, Int>,
     @Json(name = "players") val players: List<Player>,
     @Json(name = "winner") val winner: Player
-){}
+)
+
+@JsonClass(generateAdapter = true)
+data class BoardGameData(
+    @Json(name= "boardgame_data") val data: List<Game>
+)
 
 
 
