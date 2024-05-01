@@ -26,5 +26,8 @@ data class User(
 data class Account(
     @Json(name = "account_data") val accountData: User
 ){
+    fun enqueue(any: Any) {
+
+    }
 }
 

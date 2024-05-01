@@ -25,6 +25,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.create
 import java.util.concurrent.TimeUnit
 import com.example.myapplication.UserStorage
+import okhttp3.logging.HttpLoggingInterceptor
 
 
 class LoginActivity : ComponentActivity() {
@@ -32,13 +33,19 @@ class LoginActivity : ComponentActivity() {
     var currentUser : String?= null
 
     private var api: BookMatesApi
-
+    val interceptor =
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+    val interceptorClient =
+        OkHttpClient.Builder().addInterceptor(interceptor).build()
     init{
         val moshi: Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://bookmate.discovery.cs.vt.edu/")
 //            .client(provideOkHttpClient())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(interceptorClient)
 //            .addConverterFactory(GsonConverterFactory.create())
             .build()
         api = retrofit.create()

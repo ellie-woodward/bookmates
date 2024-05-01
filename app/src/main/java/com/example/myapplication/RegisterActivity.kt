@@ -8,16 +8,27 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.example.myapplication.data.api.BookMatesApi
+import com.example.myapplication.data.model.CreateAccountResponse
 import com.example.myapplication.data.model.JsonResponse
+import com.example.myapplication.data.model.LoginResponse
+import com.squareup.moshi.Json
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
-import kotlin.reflect.typeOf
 
 class RegisterActivity : ComponentActivity() {
 
@@ -26,6 +37,25 @@ class RegisterActivity : ComponentActivity() {
     private lateinit var api: BookMatesApi
 
     private lateinit var jsonObject: JSONObject
+    val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
+    val interceptor =
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+    val interceptorClient =
+        OkHttpClient.Builder().addInterceptor(interceptor).build()
+
+    init{
+        val moshi: Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("https://bookmate.discovery.cs.vt.edu/")
+//            .client(provideOkHttpClient())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(interceptorClient)
+//            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        api = retrofit.create()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +85,7 @@ class RegisterActivity : ComponentActivity() {
                         Toast.makeText(this@RegisterActivity, "Registration successful", Toast.LENGTH_SHORT).show()
                         currentUser = username.getText().toString();
                         var response = createAccount(username.getText().toString(), password.getText().toString(), email.getText().toString())
-                        if (response.status == 200){
+                        if (false){
                             sendToMainActivity()
                         }
                         else{
@@ -69,13 +99,7 @@ class RegisterActivity : ComponentActivity() {
             }}
     }
 
-    suspend fun createAccount(name: String, password: String, email: String): JsonResponse {
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://bookmate.discovery.cs.vt.edu/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        api = retrofit.create()
-
+    suspend fun createAccount(name: String, password: String, email: String): Boolean {
         val jsonObject = JSONObject()
         jsonObject.put("username", name)
         jsonObject.put("password", password)
@@ -84,8 +108,18 @@ class RegisterActivity : ComponentActivity() {
         jsonObject.put("unique_games", 0)
 
         Log.d("JSON", jsonObject.toString())
+        val requestBody = jsonObject.toString().toRequestBody(JSON)
 
-        return api.createAccount(jsonObject)
+        api.createAccount(requestBody).enqueue(
+            object : Callback<CreateAccountResponse> {
+                override fun onFailure(call: Call<CreateAccountResponse>, t: Throwable) {
+                    Log.e("The failure Response", t.message.toString())
+                }
+                override fun onResponse( call: Call<CreateAccountResponse>, response: Response<CreateAccountResponse>) {
+                    Log.e("The success Response", response.toString())
+                }
+            })
+        return true
     }
 
     private fun sendToMainActivity() {
