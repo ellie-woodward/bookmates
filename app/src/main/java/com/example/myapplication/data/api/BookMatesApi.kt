@@ -2,20 +2,36 @@ package com.example.myapplication.data.api
 
 import com.example.myapplication.Player
 import com.example.myapplication.data.model.Account
+import com.example.myapplication.data.model.BoardGameData
 import com.example.myapplication.data.model.CreateAccountResponse
 import com.example.myapplication.data.model.JsonResponse
+import com.example.myapplication.data.model.LoginResponse
 import com.example.myapplication.data.model.User
 import com.example.myapplication.data.model.Token
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 interface BookMatesApi {
+
+    //path('get_boardgame_list/<str:account_id>/',                                  views.get_boardgame_list,                                 name='get_boardgame_list'),
+    @GET(
+        "get_boardgame_list/<id>/"
+    )
+    fun getBoardGameListById(@Path("id") id: String): Call<BoardGameData>
+
+    @GET(
+        "account_login/{username}/"
+    )
+    suspend fun loginData(@Path("username") name: String): Account
 
     //path('get_player_list/<str:account_id>/'),
     @GET(
@@ -39,14 +55,6 @@ interface BookMatesApi {
         "get_csrf/"
     )
     suspend fun getToken(): Token
-
-//    @Headers("Content-Type: application/json")
-    @GET(
-        "account_login/{username}/"
-    )
-    suspend fun loginData(@Path("username") name: String): Account
-
-//    suspend fun loginData(@Header("Authorization") token: String, @Body body: JSONObject): LoginResponse
 
     //path('create_account/',
     @Headers("Content-Type: application/json")
@@ -75,11 +83,6 @@ interface BookMatesApi {
 //        "get_template_account/id/<str:account_id>/<str:template_id>/"
 //    )
 //
-//    //path('get_boardgame_list/<str:account_id>/',                                  views.get_boardgame_list,                                 name='get_boardgame_list'),
-//    @GET(
-//        "get_boardgame_list/<str:account_id>/"
-//    )
-//
 //    //path('get_boardgame_account/name/<str:account_id>/<str:boardgame_name>/',     views.get_boardgame_account_by_boardgame_name,            name='get_boardgame_account_by_boardgame_name'),
 //    @GET(
 //        "get_boardgame_account/name/<str:account_id>/<str:boardgame_name>/'"
@@ -97,7 +100,7 @@ interface BookMatesApi {
 //
 //    //path('search_player/id/<str:player_id>/',                                     views.search_player_by_id,                                name='search_player_by_id'),
 //    @GET(
-//        "search_player/od/<str:player_id>/"
+//        "search_player/id/<str:player_id>/"
 //    )
 //
 //    //path('search_account/id/<str:account_id>/',                                   views.search_account_by_id,                               name='search_account_by_id'),
@@ -105,6 +108,8 @@ interface BookMatesApi {
 //        "search_account/id/<str:account_id>/"
 //    )
 //
+
+
 //
 //    //path('assign_to_account/<str:account_id>/<str:assignable_id>/',                views.assign_to_account,                                 name='assign_to_account'),
 //    @POST(
@@ -149,6 +154,7 @@ interface BookMatesApi {
 
 //path('admin/', admin.site.urls),
 
-    //# Unimplemented Methods
-    //path('delete_player_database/name/<str:account_id>/<str:player_name>/',       views.delete_player_from_database_by_full_name,           name='delete_player_from_database_by_full_name'),
-    //path('delete_player_database/id/<int:player_id>/',                            views.delete_player_from_database_by_id,                  name='delete_player_from_database_by_id'),
+//# Unimplemented Methods
+//path('delete_player_database/name/<str:account_id>/<str:player_name>/',       views.delete_player_from_database_by_full_name,           name='delete_player_from_database_by_full_name'),
+//path('delete_player_database/id/<int:player_id>/',                            views.delete_player_from_database_by_id,                  name='delete_player_from_database_by_id'),
+
