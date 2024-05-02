@@ -14,9 +14,40 @@ data class Game(
     @Json(name = "is_finished") var finished: Boolean,
     @Json(name = "duration") val duration: Int,
     @Json(name = "scores_dict") var scores: MutableMap<String, Int>,
-    @Json(name = "players") val players: List<Player>,
-    @Json(name = "winner") var winner: Player
+    @Json(name = "players") val players: List<CreatedPlayer>,
+    @Json(name = "winner") var winner: CreatedPlayer
 ){
+
+    companion object {
+        // Function to create a new game
+        fun createGame(
+            matchName: String,
+            gameName: String,
+            templateId: String,
+            finished: Boolean,
+            duration: Int,
+            scores: MutableMap<String, Int>,
+            players: List<CreatedPlayer>,
+            winner: CreatedPlayer
+        ): Game {
+            // You can generate a unique ID for the game using UUID.randomUUID()
+            val gameId = UUID.randomUUID().toString()
+
+            // Return a new instance of the Game class with the provided parameters
+            return Game(
+                id = mapOf("_id" to gameId), // Set the game ID
+                matchName = matchName,
+                gameName = gameName,
+                templateId = templateId,
+                finished = finished,
+                duration = duration,
+                scores = scores,
+                players = players,
+                winner = winner
+            )
+        }
+    }
+
     fun updateTitle(newTitle: String) {
         // You can update other fields similarly
         // For example, if you want to update matchName:
@@ -63,7 +94,10 @@ data class Game(
         // and return that player. If there's a tie, you might
         // need to define additional rules to break the tie.
         // return winner
+        var winner: Player
+        var score = 0
 
+        return null
     }
 }
 

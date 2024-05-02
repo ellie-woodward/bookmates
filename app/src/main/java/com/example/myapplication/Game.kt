@@ -25,7 +25,7 @@ data class Game(
     val scores: MutableMap<UUID, MutableList<Int>> = mutableMapOf(),
     var finished: Boolean = false
 ){
-    constructor(templateID: UUID, title: String, players: List<Player>,scores: MutableMap<UUID, MutableList<Int>>) : this(UUID.randomUUID(), templateID,title, players, scores)
+    constructor(templateID: UUID, title: String, players: List<CreatedPlayer>,scores: MutableMap<UUID, MutableList<Int>>) : this(UUID.randomUUID(), templateID,title, players, scores)
     fun updateScore(player: Player, score: MutableList<Int>){
         scores[player.playerId] = score
     }
@@ -42,7 +42,7 @@ data class Game(
 
 
 
-object Games : List<Game> {
+object Games {
 
     private val gamesList: MutableList<Game> = mutableListOf()
     private lateinit var api: BookMatesApi
@@ -96,8 +96,8 @@ object Games : List<Game> {
 
         // Function to create a new game
         fun createGame(matchName: String, gameName: String, templateId: String,
-                       finished: Boolean, duration: Int, scores: Map<String, Int>,
-                       players: List<Player>, winner: Player) {
+                       finished: Boolean, duration: Int, scores: MutableMap<String, Int>,
+                       players: List<CreatedPlayer>, winner: CreatedPlayer) {
             val game = Game(id = emptyMap(), matchName = matchName, gameName = gameName,
                 templateId = templateId, finished = finished, duration = duration,
                 scores = scores, players = players, winner = winner)
