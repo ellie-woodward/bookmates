@@ -1,5 +1,7 @@
 package com.example.myapplication
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -11,6 +13,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -75,6 +78,13 @@ class GameFragment: Fragment() {
                 sharedViewModel.UpdateFinished(game)
             }
 
+        }
+
+        binding.ImagePickerButton.setOnClickListener {
+            if (game != null) {
+                updateScoresWithArray(game)
+            }
+            // selectImageFromGallery(view)
         }
     }
 
@@ -212,6 +222,69 @@ class GameFragment: Fragment() {
 
 
     fun saveScores(game: Game){
+
+    }
+
+    private val PICK_IMAGE_REQUEST = 1
+
+    fun selectImageFromGallery(view: View){
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+            // Get the URI of the selected image
+            val imageUri = data.data
+            // Now you can do something with this URI, such as displaying the image in an ImageView
+        }
+    }
+
+    fun updateScoresWithArray(game:Game){
+        val rows = 2
+        val cols = 2
+        val array = arrayOf(
+            intArrayOf(500, 35),
+            intArrayOf(808, 72),
+            intArrayOf(63, 44),
+            intArrayOf(0, 0),
+            intArrayOf(0, 90),
+            intArrayOf(603, 0),
+            intArrayOf(54, 70),
+            intArrayOf(23, 7682)
+        )
+
+        if (array.size >game.scores[game.scores.keys.elementAt(0)]?.size!!){
+            println("first one")
+            println(array.size)
+            println(game.scores.size)
+            Toast.makeText(requireContext(), "There are more players/rows than game has. Please Try again", Toast.LENGTH_LONG).show()
+        }else if(array.get(0).size > game.scores.size ){
+            println("second one")
+            println(array[0].size)
+            println(game.scores[game.scores.keys.elementAt(0)]?.size)
+            Toast.makeText(requireContext(), "There are more players/rows than game has. Please Try again", Toast.LENGTH_LONG).show()
+        }else {
+
+            for ((rowIndex, row) in array.withIndex()) {
+
+                for ((colIndex, value) in row.withIndex()) {
+                    val playerKeyIndex = colIndex % game.scores.size // Cycling through player keys
+                    val playerKey = game.scores.keys.toList()[playerKeyIndex]
+                    //game.scores[playerKey]?.add(value)
+                    game.scores[playerKey]?.set(rowIndex, value)
+
+                }
+            }
+
+            game.scores.forEach { (playerID, scores) ->
+                println("Player: $playerID, Scores: $scores")
+            }
+            updateUI(game)
+        }
 
     }
 

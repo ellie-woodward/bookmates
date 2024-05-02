@@ -2,6 +2,7 @@ package com.example.myapplication.data.api
 
 import com.example.myapplication.Player
 import com.example.myapplication.data.model.Account
+import com.example.myapplication.data.model.AddUserResponse
 import com.example.myapplication.data.model.BoardGameData
 import com.example.myapplication.data.model.CreateAccountResponse
 import com.example.myapplication.data.model.JsonResponse
@@ -45,7 +46,7 @@ interface BookMatesApi {
     )
     suspend fun fetchPlayerAccountByIdAndName(): User
 
-    //path('search_account/username/<str:account_username>/')
+//    path('search_account/username/<str:account_username>/')
     @GET(
         "search_account/username/<str:account_username>/"
     )
@@ -62,6 +63,13 @@ interface BookMatesApi {
         "create_account/"
     )
     fun createAccount(@Body body: RequestBody): Call<CreateAccountResponse>
+
+    //path('create_player/<str:account_id>/',                                       views.create_player_by_account_id,                        name='create_player_by_account_id'),
+    @Headers("Content-Type: application/json")
+    @POST(
+        "create_player/{id}/"
+    )
+    fun addPlayerByAccountId(@Path("id") id: String, @Body body: RequestBody): Call<AddUserResponse>
 
 //    //path('get_player_account/id/<str:account_id>/<str:player_id>/',               views.get_player_account_by_id,                           name='get_player_account_by_id'),
 //    @GET(
@@ -126,10 +134,6 @@ interface BookMatesApi {
 //        "create_template/<str:account_id>/"
 //    )
 //
-//    //path('create_player/<str:account_id>/',                                       views.create_player_by_account_id,                        name='create_player_by_account_id'),
-//    @POST(
-//        "create_player/<str:account_id>/"
-//    )
 //
 //    //path('update_player/<str:account_id>/<str:player_id>/',                       views.update_player_by_id, name="update_player_by_id"),
 //    @POST(

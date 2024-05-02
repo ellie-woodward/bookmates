@@ -15,3 +15,9 @@ data class JsonResponse(
 data class CreateAccountResponse(
     @Json(name = "account_data") val user : User
 )
+
+//JsonResponse({'player_id': player_id, 'player_data': parse_json(player)}, status=201)
+@JsonClass(generateAdapter = true)
+data class AddUserResponse(
+    @Json(name="status") val status: Int
+)

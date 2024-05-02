@@ -101,6 +101,7 @@ class LoginActivity : ComponentActivity() {
         val response: Account
         try{
             response = api.loginData(name)
+            Log.d("tag", response.toString())
         } catch (e:Exception){
             return false
         }
